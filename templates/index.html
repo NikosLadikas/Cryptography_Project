@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RSA Cryptography</title>
+</head>
+<body>
+    <h2>RSA Cryptography Project</h2>
+
+    <h3>Public Key:</h3>
+    <textarea rows="5" cols="80" readonly>{{ public_key }}</textarea>
+
+    <h3>Private Key:</h3>
+    <textarea rows="5" cols="80" readonly>{{ private_key }}</textarea>
+
+    <form method="POST">
+        <h3>Message:</h3>
+        <input type="text" name="message" value="{{ message }}" required>
+
+        <button type="submit" name="encrypt">Encrypt</button>
+        <button type="submit" name="sign">Sign</button>
+    </form>
+
+    {% if encrypted_message %}
+    <h3>Encrypted Message:</h3>
+    <textarea rows="3" cols="80" readonly>{{ encrypted_message }}</textarea>
+    <form method="POST">
+        <input type="hidden" name="encrypted_message" value="{{ encrypted_message }}">
+        <button type="submit" name="decrypt">Decrypt</button>
+    </form>
+    {% endif %}
+
+    {% if decrypted_message %}
+    <h3>Decrypted Message:</h3>
+    <p>{{ decrypted_message }}</p>
+    {% endif %}
+
+    {% if signature %}
+    <h3>Signature:</h3>
+    <textarea rows="3" cols="80" readonly>{{ signature }}</textarea>
+    <form method="POST">
+        <input type="hidden" name="message" value="{{ message }}">
+        <input type="hidden" name="signature" value="{{ signature }}">
+        <button type="submit" name="verify">Verify Signature</button>
+    </form>
+    {% endif %}
+
+    {% if verification_result is not none %}
+    <h3>Verification Result:</h3>
+    <p>{{ "✅ Valid Signature" if verification_result else "❌ Invalid Signature" }}</p>
+    {% endif %}
+</body>
+</html>
